@@ -98,9 +98,48 @@ async function createDriver(req, res) {
   }
 }
 
+async function updateDriver(req, res) {
+  const id = req.params.id;
+  const { name, license_number, contact } = req.body;
+
+  try {
+    const driver = await Driver.findByPk(id);
+
+    if (driver) {
+      driver.name = name;
+      driver.license_number = license_number;
+      driver.contact = contact;
+
+      await driver.save();
+
+      res.status(200).json({
+        status: "Success",
+        message: "Success update driver data",
+        isSuccess: true,
+        data: { driver },
+      });
+    } else {
+      res.status(404).json({
+        status: "Failed",
+        message: "Failed data driver not found!",
+        isSuccess: false,
+        data: null,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "Failed",
+      message: "Failed to get driver data",
+      isSuccess: false,
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   createDriver,
   getAllDrivers,
   getDriverById,
   deleteDriverById,
+  updateDriver,
 };
