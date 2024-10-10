@@ -77,7 +77,29 @@ async function deleteDriverById(req, res) {
   }
 }
 
+async function createDriver(req, res) {
+  const { name, license_number, contact } = req.body;
+
+  try {
+    const newDriver = await Driver.create({ name, license_number, contact });
+    res.status(200).json({
+      status: "Success",
+      message: "Ping successfully",
+      isSuccess: true,
+      data: { newDriver },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "500",
+      message: "Failed to get cars data",
+      isSuccess: false,
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
+  createDriver,
   getAllDrivers,
   getDriverById,
   deleteDriverById,

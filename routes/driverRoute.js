@@ -3,7 +3,7 @@ const router = express.Router();
 
 const driverController = require("../controller/driverController");
 
-// router.post("/", carController.createCar);
+router.post("/", driverController.createDriver);
 router.get("/", driverController.getAllDrivers);
 router.get("/:id", driverController.getDriverById);
 router.delete("/:id", driverController.deleteDriverById);
